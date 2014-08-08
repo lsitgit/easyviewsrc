@@ -1,3 +1,28 @@
-.my_info_text {
-	min-height:40px;	
+/*this is used to horizontally center the reload_data button when the others panel is present*/
+.reload_data_button_custom {
+	top:19px !important;
 }
+/* this is used to create a space between the user report and quickedit icons in the edit column*/
+.x-action-col-icon {
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+}
+
+
+/*sets background color of header bar*/
+.x-panel-header {
+        background-color:#003157!important;
+}
+
+/*adds some space between the help button and pulldown in the header bar*/
+.my-header-item {
+	margin-right:5px;
+	margin-left:5px;
+}
+
+/*formatting for the links in the header bar*/
+.x-panel-header a:link {color:white;}
+.x-panel-header a:visited {color:white;}
+.x-panel-header a:active {color:white;}
+.x-panel-header .my-header-link a:hover {color:white;background-color:#3BA7F5}

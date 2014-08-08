@@ -18,6 +18,7 @@ Ext.define('easyview.view.main.EasyviewGrid', {
         store: 'Items',
         columns: COLUMNS, //defined in indexLoad.js
 	region:'center',
+	enableColumnMove:false,
 	listeners:{
 		//this function sorts out the header menus for the grid
         	afterrender: function(grid) {
