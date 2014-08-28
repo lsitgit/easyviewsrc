@@ -12,10 +12,21 @@ Ext.define('easyview.view.main.Main', {
     	layout: 'border',
 	
         title:'&nbsp;&nbsp;<a href="'+MYHOME+'"><img src="resources/gauchospace.svg" '
-		+'onmouseover="this.src=\'resources/gauchospace_hover.svg\'" onmouseout="this.src=\'resources/gauchospace.svg\'"></a>'
+		+'onmouseover="this.src=\'resources/gauchospace_hover.svg\'" onmouseout="this.src=\'resources/gauchospace.svg\'"></a><img src="resources/gradebook.svg">'
 		+'<br><div class="my-header-link">' 
-		+'<a href="'+MYHOME+'" STYLE="text-decoration: none">My Home</a> / '
-		+'<a href="'+COURSEHOME+'" STYLE="text-decoration: none">' + COURSENAME + '</a></div>',
+		+'<a href="'+MYHOME+'">My Home</a>&nbsp;'
+		+'<span class="gradebookgold">&#9654; </span> '
+		+'<a href="'+COURSEHOME+'">' + COURSENAME + '</a>'
+                +'&nbsp;&nbsp;&nbsp;&nbsp;' 
+                +'<a href="' + THISURL + '" title="Reset"  > Refresh&nbsp;&nbsp;</a>'
+                +'<span class="gradebookgold"> Other Tools &#9654;</span>'
+                +'<a href="' + SETUPURL + '" title="Gradebook Setup"> Setup &nbsp;&nbsp;</a>'
+                +'<a href="' + IMPORTURL + '" title="Import"  > Import &nbsp;&nbsp;</a>'
+                +'<a href="' + EXPORTURL + '" title="Export"  > Export &nbsp;&nbsp;</a>'
+                +'<a href="' + BACKURL + '" title="Old Gradebook Report" > Old Report&nbsp;&nbsp;</a>'
+                +'<a href="' + MYPREFURL + '" title="My Preferences" > My Preferences</a>'
+                +'</div>',
+
 	xtype: 'panel',
 	header:{
 		minHeight:73,
@@ -28,19 +39,19 @@ Ext.define('easyview.view.main.Main', {
 			hidden:DEFAULT_CHECK_GRADES_AND_OTHERS==0?true:false,
 			layout:'hbox',
 			items:GRADEBOOK_ACCESS_PANEL//defined in indexLoad.php based on config variables
-		},{
+		},/*{
 			xtype:'combobox',
 			id:'navigation_combo',
-			emptyText:'Original Grader Report...',
+			emptyText:'Tools...',
 			cls:'my-header-item',
-			width:250,
+			width:100,
 			store:[
-				'Original Grader Report','Categories and Items',
+				'Setup',
 				'Import', 'Export',
-				'Quick Edit', 'User Report'
+				'Old report', 'My Preferences'
 			],
 			editable:false
-		},{
+		},*/{
                        	xtype: 'button',
 			cls:'my-header-item',
                        	text: 'Help',
@@ -56,7 +67,7 @@ Ext.define('easyview.view.main.Main', {
 		xtype:'combobox',
 		id:'group_filter_select',
         	displayField: 'name',
-        	width: 300,
+        	width: 200,
         	store: 'Groups',
         	queryMode: 'local',
         	editable: false,
@@ -65,7 +76,7 @@ Ext.define('easyview.view.main.Main', {
 		xtype:'combobox',
 		id:'category_filter_select',
         	displayField: 'name',
-        	width: 300,
+        	width: 200,
         	store: 'Categories',
         	queryMode: 'local',
         	editable: false,

@@ -25,13 +25,17 @@ Ext.define('easyview.Application', {
 	requires:['Ext.data.proxy.Rest',
 		'Ext.grid.feature.Summary',
 		'Ext.window.Toast',
+                'Ext.grid.plugin.CellEditing',
+                'Ext.grid.Panel',
+                'Ext.grid.plugin.RowEditing',
 		'Ext.grid.column.Action',
 		'Ext.form.field.ComboBox',
 		'Ext.form.field.TextArea',
 		'easyview.plugins.printer.Printer',
 		'Ext.window.Window',
 		'Ext.form.CheckboxGroup',
-		'Ext.form.Panel'
+		'Ext.form.Panel',
+		'Ext.form.Label'
 	],
 
 	launch: function () {

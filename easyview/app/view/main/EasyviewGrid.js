@@ -27,11 +27,10 @@ Ext.define('easyview.view.main.EasyviewGrid', {
 				if(icon){
 					Ext.get(icon).swallowEvent('click', true);
 					Ext.get(icon).addListener('click',function(icon){
-                                        	var url = WROOT+"/grade/report/quick_edit/index.php?id="
-							+COURSEIDPASSEDIN+"&item=grade&group=&itemid="
+                                        	     var url = WROOT+"/grade/report/easyview/easyview/gradelinkedit.php?id="
+							+COURSEIDPASSEDIN+"&itemid="
 							+icon.target.id.substring(1);
-                                        	var win = window.open(url, 'easygradeuserreport');
-                                        	win.focus();
+						window.location.href = url;
 					});
 				}
 			});
@@ -49,8 +48,7 @@ Ext.define('easyview.view.main.EasyviewGrid', {
                                 	var gradeid = unlocked_grid_header_menu.activeHeader.dataIndex;
 					// the substring(1) is a hack to strip the character that prefixes the id number for trying to get printing to work
                                         var url = WROOT+"/grade/report/quick_edit/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
-                                        var win = window.open(url, 'easygradeuserreport');
-                                        win.focus();
+					window.location.href = url;
                            	}
                     	},{
                         	text:"Histogram (full class)",
@@ -97,7 +95,7 @@ Ext.define('easyview.view.main.EasyviewGrid', {
                         var unlocked_menu_item = unlocked_grid_header_menu.add(new_unlocked_menu_items);//adding the menu items to the headers in that part of the grid
                    	unlocked_grid_header_menu.on('beforeShow',function(){
                         	var colId = unlocked_grid_header_menu.activeHeader.itemId;//get the itemId (id for the column which indicates the type of row it is)
-                                if(colId.indexOf('manual')==0){///case if manual grade item
+                                if(colId.indexOf('manual')==0||colId.indexOf('mod')==0){///case if manual grade item
                                 	if(TEXT_PARAM==1){unlocked_menu_item[textfield].show();}
 					else{unlocked_menu_item[textfield].hide();}
 
@@ -106,7 +104,7 @@ Ext.define('easyview.view.main.EasyviewGrid', {
 
 					if(HISTOGRAM_PARAM==1){unlocked_menu_item[histogram].show();}
 					else{unlocked_menu_item[histogram].hide();}
-                            	}else if(colId.indexOf('category')==0||colId.indexOf('mod')==0){//case if category or module item
+                            	}else if(colId.indexOf('category')==0){//case if category or module item
                                 	if(TEXT_PARAM==1){unlocked_menu_item[textfield].show();}
 					else{unlocked_menu_item[textfield].hide();}
 

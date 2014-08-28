@@ -53,31 +53,86 @@ Ext.define('easyview.controller.Root', {
 		}
 	},
 	grid_cell_click:function(grid,td,cellIndex,record,tr,rowIndex,e,e0pts){
-		var ggid = grid.getStore().getAt(rowIndex).get((grid.grid.columns[cellIndex].dataIndex).substr(1)+"ggid");
+		var row = grid.getStore().getAt(rowIndex);
+		var column = grid.grid.columns[cellIndex];
+		var ggid = row.get((column.dataIndex).substr(1)+"ggid");
+		var gradegrade_store = Ext.data.StoreManager.lookup('Gradegrade');
 		if(!(typeof ggid === 'undefined')){
-			Ext.create('Ext.window.Window',{
-                        	title:'Grade Item Editor for '+ggid,
+			var edit_window = Ext.create('Ext.window.Window',{
+                        	title:'Grade Item Editor for '+column.text.replace(/<img[^>]*>/g,""),
                         	height:400,
                         	width:400,
                         	bodyPadding: 10,
                         	constrain: true,
+				layout:'border',
+				modal:true,
                         	items:[{
-				/*
+					xtype:'grid',
+					store:'Gradegrade',
+                			plugins: {
+                        			ptype:'rowediting',
+                        			clicksToEdit:2
+                			},
+					region:'north',
+					height:75,
+					columns:[
+						{header:'ID',	dataIndex:'id', flex: 1},
+						{header:'Feedback',dataIndex:'feedback', flex:2, editor: 'textfield'},
+						{header:'Score',	dataIndex:'finalgrade', flex:1, editor: 'numberfield'}
+					]
+				},{
 					xtype:'gradegradeform',
 					region:'center',
 					width:'100%',	
 					height:300,
-				},{*/
-                                        xtype:'button',
-                                        text:'Cancel',
-                                        height:40,
-                                        width:'100%',
-          				handler: function () { this.up('window').close(); }
+				},{
+					xtype:'container',
+					region:'south',
+					items:[{
+                                        	xtype:'button',
+                                        	text:'Cancel',
+                                       	 	height:40,
+                                        	width:'100%',
+          					handler: function () { this.up('window').close(); }
+					},{
+                                        	xtype:'button',
+                                        	text:'Submit',
+                                       	 	height:40,
+                                        	width:'100%',
+						formBind:true,
+          					handler: function () { 
+							var form = this.up('window').down('form'); 
+							if(form.isValid()){
+                						form.getForm().submit({
+									method:'POST',
+                    							success: function(form, action) {
+                       								Ext.Msg.alert('Success', action.result.msg);
+                    							},
+                    							failure: function(form, action) {
+                        							Ext.Msg.alert('Failed', action.result.msg);
+                    							}
+                						});
+							}
+						}
+					}]
                                 }]
-                	}).show();      
-			//var ggidgrid = Ext.ComponentQuery.query('#ggidgrid')[0];
-			//ggidgrid.getStore().load({params:{'ggid':ggid}, method:'GET'});
-			//grid.getStore().reload();
+                	})
+			edit_window.show();      
+			gradegrade_store.load({
+				params: { 'ggid' : ggid },
+    				callback: function(records, operation, success) {
+					Ext.ComponentQuery.query('gradegradeform')[0].getForm().loadRecord(records[0]);
+				}
+			 });
+	
+			var form = edit_window.down('gradegradeform');
+	/*	
+			form.down('#form_name').setText("User: "+row.get('name'));
+			form.down('#form_perm').setText("Perm: "+row.get('perm'));
+			form.down('#form_itemname').setText("Grade Item: "+grid.grid.columns[cellIndex].text.replace(/<img[^>]*>/g,""));
+			form.down('#form_score').setValue(row.get(column.dataIndex));
+			form.down('#form_feedback').setValue(row.get(column.dataIndex.substr(1)+"feedback"));
+	*/
 		}
 	},
 	/*//used for category multifilter
