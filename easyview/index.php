@@ -115,6 +115,14 @@ $_SESSION['JSON_ITEMS_TOTAL']=count($array_final);
 session_start();
 $_SESSION['GRADEBOOK_DATALOAD']= (int)time();
 
+// course gradebook precision
+$decimalpoints = 2; 
+$gbsetting = $DB->get_record('grade_settings', array('courseid' => $COURSEIDPASSEDIN, 'name'=>'decimalpoints'), 'value');
+if ( is_object($gbsetting) && property_exists($gbsetting, 'value') && is_numeric($gbsetting->value) ) {
+	$decimalpoints = $gbsetting->value;
+}
+trigger_error('$decimalpoints = ' . $decimalpoints);
+
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -131,7 +139,7 @@ $_SESSION['GRADEBOOK_DATALOAD']= (int)time();
         	var THISURL = WROOT+"/grade/report/easyview/easyview/index.php?id="+COURSEIDPASSEDIN;
         	var BACKURL = WROOT+"/grade/report/grader/index.php?id="+COURSEIDPASSEDIN;
         	var HELPURL = <?php print("'".$help_url."'");?>;
-         	var IMPORTURL = WROOT+"/grade/import/csv/index.php?id="+COURSEIDPASSEDIN;
+         	var IMPORTURL = WROOT+"/grade/import/importpreview/index.php?id="+COURSEIDPASSEDIN;
          	var EXPORTURL = WROOT+"/grade/export/egrade/index.php?id="+COURSEIDPASSEDIN;
          	var SETUPURL = WROOT+"/grade/edit/tree/index.php?id="+COURSEIDPASSEDIN;
          	var MYPREFURL = WROOT+"/grade/report/grader/preferences.php?id="+COURSEIDPASSEDIN;
@@ -153,6 +161,8 @@ $_SESSION['GRADEBOOK_DATALOAD']= (int)time();
 		var CHECK_OTHERS_TIME =<?php print ($check_others_time);?>;
 		var CHECK_GRADES_TIME =<?php print ($check_grades_time);?>;
 		var SHOW_FEEDBACK_TOOLTIP =<?php print ($show_feedback_tooltip);?>;
+
+		var SCORE_PRECISION = <?php echo  $decimalpoints; ?>; // will check user preference later
 
         	//this php block grabs the grade_items array from the php above and creates a javascript array from it
         	//this will be used to create the columns and model

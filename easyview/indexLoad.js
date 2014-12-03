@@ -152,7 +152,7 @@
 
 		}
                 COLUMNS.push({header: image+grade_items[i]['name'], 
-				dataIndex: grade_items[i]['gid'], width:100,
+				dataIndex: grade_items[i]['gid'], width:100, align:'right',
 				hidden:hidden_var,
 				summaryType:function(records,values){//custom summary function that calculates averages without null values
                                         var count = 0;
@@ -199,13 +199,13 @@
 						"<p>"+grade_name+", Score: "+new_value+ 
 						"</strong><p>"+data.get(feedback_name) + '"';
 					};
-                                        return new_value;
+                                        return new_value == '-' ? new_value : new_value.toFixed(SCORE_PRECISION);// SCORE_PRECISION in index.php
                                 },
                                 summaryRenderer: function(value, summaryData, dataIndex) {
                                         if(isNaN(value)){
                                                 return "-";
                                         }
-                                        return Math.round(value*100)/100;
+                                        return (Math.round(value*100)/100).toFixed(SCORE_PRECISION);
                                 }
 				
                 }); 

@@ -22,7 +22,29 @@
 }
 
 /*formatting for the links in the header bar*/
-.x-panel-header a:link {color:white;}
-.x-panel-header a:visited {color:white;}
-.x-panel-header a:active {color:white;}
-.x-panel-header .my-header-link a:hover {color:white;background-color:#3BA7F5}
+.x-panel-header a:link {color:white; text-decoration: none; font-weight:600;}
+.x-panel-header a:visited {color:white; text-decoration: none; font-weight:600;}
+.x-panel-header a:active {color:white; text-decoration: none; font-weight:600;}
+.x-panel-header .my-header-link a:hover {color:white; font-weight:900;background-color:#3BA7F5}
+
+
+
+.x-column-header .header-icon  a:hover {color:blue; font-weight:900;background-color:#3BA7F5}
+.x-grid-cell-inner a:hover {font-weight:900;background-color:#3BA7F5}
+
+.gradebookgold { 
+	text-decoration: none;
+	color:#FF9900;
+	font-weight:900;
+}
+
+.smuserreportlink { 
+	text-decoration: none;
+	color:gray;
+	font-weight:900;
+}
+.topnavlinks { 
+	text-decoration: none;
+	color:white;
+	font-weight:800;
+}
