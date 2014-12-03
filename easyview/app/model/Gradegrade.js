@@ -7,26 +7,30 @@
  * */
 
 Ext.define('easyview.model.Gradegrade', {
-        extend: 'Ext.data.Model',
-        fields: [
-		{name:'id',		type:'int'},
-		{name:'itemid',		type:'int'},
-		{name:'userid',		type:'int'},
-		{name:'finalgrade',	type:'float'},
-		{name:'hidden',	type:'int'},
-		{name:'locked',	type:'int'},
-		{name:'overridden',	type:'int'},
-		{name:'excluded',	type:'int'},
-		{name:'feedback',	type:'string'},
-		{name:'itemname',	type:'string'},
-		{name:'itemtype',	type:'string'},
-		{name:'itemmodule',	type:'string'},
+    extend: 'Ext.data.Model',
+    allowNull: true,
+    fields: [
+		{name:'id', 	        type:'int'},
+		{name:'itemid',		    type:'int'},
+		{name:'userid',		    type:'int'},
+		{name:'finalgrade',	    type:'float',       defaultValue: undefined },
+		{name:'hidden',         type:'string',      defaultValue: 'No' },
+		{name:'locked',         type:'string'},
+		{name:'overridden',	    type:'string',      defaultValue: 'No' },
+		{name:'excluded',	    type:'string',      defaultValue: 'No' },
+		{name:'feedback',	    type:'string'},
+		{name:'itemname',	    type:'string'},
+		{name:'itemtype',	    type:'string'},
+		{name:'itemmodule',	    type:'string',      defaultValue: 'manual' },
 		{name:'itemgrademax',	type:'float'},
-		{name:'itemlocked',	type:'int'},
+		{name:'itemlocked',	    type:'int'},
 		{name:'itemscaleid',	type:'int'},
-		{name:'firstname',	type:'string'},
-		{name:'lastname',	type:'string'},
-		{name:'idnumber',	type:'string'}
+		//{name:'firstname',	type:'string'},
+		//{name:'lastname',	type:'string'},
+		{name:'displayname',	type:'string'},
+		{name:'idnumber',	    type:'string'},
+		{name:'email',	        type:'string'},
+		{name:'pix',	        type:'string'}
         ]
 });
 

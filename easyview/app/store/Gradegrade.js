@@ -14,12 +14,11 @@ Ext.define('easyview.store.Gradegrade', {
         autoSync: true,
         proxy: {
                 type: 'rest',
-                url: '/test/25dec05/local/easyview/gradegrade_json.php',
+                url: 'gradegrade_json.php',
                 reader: {
                         type: 'json',
                         rootProperty: 'gradegrade',
-                        successProperty: 'success',
-            		//totalProperty: 'total'
+                        successProperty: 'success'
                 }
         },
 });

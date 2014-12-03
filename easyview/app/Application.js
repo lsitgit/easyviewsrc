@@ -17,10 +17,6 @@ Ext.define('easyview.Application', {
 	extend: 'Ext.app.Application',
     	name: 'easyview',
 
-    	views: ['main.Main','main.EasyviewGrid','main.CategoryWindow','main.GradeGradeForm'],
-    	controllers: ['Root'],
-	models:['Items','Combo','Others','Dataload','Gradegrade'],
-	stores:['Items','Groups','Categories','Others','Dataload','Gradegrade'], 
     
 	requires:['Ext.data.proxy.Rest',
 		'Ext.grid.feature.Summary',
@@ -33,10 +29,15 @@ Ext.define('easyview.Application', {
 		'Ext.form.field.TextArea',
 		'easyview.plugins.printer.Printer',
 		'Ext.window.Window',
+		'Ext.form.FieldSet',
 		'Ext.form.CheckboxGroup',
 		'Ext.form.Panel',
 		'Ext.form.Label'
 	],
+	views: ['main.Main','main.EasyviewGrid','main.CategoryWindow','main.GradeEditForm', 'main.GradeEditWindow'],
+    	controllers: ['Root'],
+	models:['Items','Combo','Others','Dataload','Gradegrade'],
+	stores:['Items','Groups','Categories','Others','Dataload','Gradegrade'], 
 
 	launch: function () {
 		if (Ext.isSafari && Ext.safariVersion == 7) {

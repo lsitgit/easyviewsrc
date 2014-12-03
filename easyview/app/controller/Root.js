@@ -12,23 +12,23 @@
  */
 Ext.define('easyview.controller.Root', {
     extend: 'Ext.app.Controller',
-        init: function(){
-                this.control({
-                        '#group_filter_select'                  :       {select:this.groupcomboselect},
-                        '#navigation_combo'                  :       {select:this.navigation_combo_select},
-                        //'#easyviewgrid' 	             	:       {celldblclick:this.grid_cell_click},
-                        //'#category_filter_select'               :       {blur:this.categorycomboselect},
-                        '#category_filter_select'               :       {select:this.categorycomboselect},
-//                        '#category_filter_select'               :       {select:this.categorycomboselecttoast},
-			'button[action=details]'		: 	{click: this.details},
-			'button[action=totals]'			: 	{click: this.totals},
-			'button[action=reload_data]'		: 	{click: this.reload_data},
-			'button[action=gradebook_access]'	: 	{click: this.gradebook_access},
-			//'button[action=category_multifilter]'	: 	{click: this.category_multifilter},
-			//'button[action=submit_multifilter]'	: 	{click: this.submit_multifilter},
-			//'button[action=close_window]'		: 	{click: this.close_window}
-                });
-        },
+    init: function(){
+        this.control({
+            '#group_filter_select'              : {select:this.groupcomboselect},
+            '#navigation_combo'                 : {select:this.navigation_combo_select},
+            '#easyviewgrid' 	             	: {celldblclick:this.grid_cell_click},
+            //'#category_filter_select'           : {blur:this.categorycomboselect},
+            '#category_filter_select'           : {select:this.categorycomboselect},
+//           '#category_filter_select'            : {select:this.categorycomboselecttoast},
+            'button[action=details]'		    : {click: this.details},
+            'button[action=totals]'			    : {click: this.totals},
+            'button[action=reload_data]'		: {click: this.reload_data},
+            'button[action=gradebook_access]'	: {click: this.gradebook_access},
+            //'button[action=category_multifilter]'	: 	{click: this.category_multifilter},
+            //'button[action=submit_multifilter]'	: 	{click: this.submit_multifilter},
+            //'button[action=close_window]'		: 	{click: this.close_window}
+        });
+    },
 	navigation_combo_select:function(combo,record,index){
 		var selected = record[0].data.field1;	
 		switch(selected){
@@ -55,85 +55,43 @@ Ext.define('easyview.controller.Root', {
 	grid_cell_click:function(grid,td,cellIndex,record,tr,rowIndex,e,e0pts){
 		var row = grid.getStore().getAt(rowIndex);
 		var column = grid.grid.columns[cellIndex];
-		var ggid = row.get((column.dataIndex).substr(1)+"ggid");
+		var ggid = row.get((column.dataIndex).substr(1)+"ggid"); // NOTE: it is better to send userid + grade_item.id
+        var gid = column.dataIndex.substr(1); // grade_items.id
+//        console.log('gid = ' + gid);
+        console.log('ggid = ' + ggid);
+//        console.log('rowIndex = ' + rowIndex);
+//        console.log('cellIndex = ' + cellIndex);
+//        console.log('RECORD: ');
+//        console.log(record);
+//        console.log('row: ');      
+//        console.log(row);
+//        console.log('userid = ' + row.data.userid);
+//        console.log('column: ');
+//        console.log(column);
+
 		var gradegrade_store = Ext.data.StoreManager.lookup('Gradegrade');
 		if(!(typeof ggid === 'undefined')){
-			var edit_window = Ext.create('Ext.window.Window',{
-                        	title:'Grade Item Editor for '+column.text.replace(/<img[^>]*>/g,""),
-                        	height:400,
-                        	width:400,
-                        	bodyPadding: 10,
-                        	constrain: true,
-				layout:'border',
-				modal:true,
-                        	items:[{
-					xtype:'grid',
-					store:'Gradegrade',
-                			plugins: {
-                        			ptype:'rowediting',
-                        			clicksToEdit:2
-                			},
-					region:'north',
-					height:75,
-					columns:[
-						{header:'ID',	dataIndex:'id', flex: 1},
-						{header:'Feedback',dataIndex:'feedback', flex:2, editor: 'textfield'},
-						{header:'Score',	dataIndex:'finalgrade', flex:1, editor: 'numberfield'}
-					]
-				},{
-					xtype:'gradegradeform',
-					region:'center',
-					width:'100%',	
-					height:300,
-				},{
-					xtype:'container',
-					region:'south',
-					items:[{
-                                        	xtype:'button',
-                                        	text:'Cancel',
-                                       	 	height:40,
-                                        	width:'100%',
-          					handler: function () { this.up('window').close(); }
-					},{
-                                        	xtype:'button',
-                                        	text:'Submit',
-                                       	 	height:40,
-                                        	width:'100%',
-						formBind:true,
-          					handler: function () { 
-							var form = this.up('window').down('form'); 
-							if(form.isValid()){
-                						form.getForm().submit({
-									method:'POST',
-                    							success: function(form, action) {
-                       								Ext.Msg.alert('Success', action.result.msg);
-                    							},
-                    							failure: function(form, action) {
-                        							Ext.Msg.alert('Failed', action.result.msg);
-                    							}
-                						});
-							}
-						}
-					}]
-                                }]
-                	})
-			edit_window.show();      
+            var edit_window = Ext.widget('gradeEditWindow', { title: 'Grade Item Editor for '+column.text.replace(/<img[^>]*>/g,"")});
+			edit_window.show();
+            // param needs to be grade_item.id & user.id
 			gradegrade_store.load({
-				params: { 'ggid' : ggid },
+                    params: {
+                        'ggid': ggid,
+                        'gid' : gid,
+                        'uid' : row.data.userid
+                    },
     				callback: function(records, operation, success) {
-					Ext.ComponentQuery.query('gradegradeform')[0].getForm().loadRecord(records[0]);
-				}
+                        var gfrm = Ext.ComponentQuery.query('gradeEditForm');
+					    gfrm[0].getForm().loadRecord(records[0]);
+				    }
 			 });
-	
-			var form = edit_window.down('gradegradeform');
-	/*	
-			form.down('#form_name').setText("User: "+row.get('name'));
-			form.down('#form_perm').setText("Perm: "+row.get('perm'));
-			form.down('#form_itemname').setText("Grade Item: "+grid.grid.columns[cellIndex].text.replace(/<img[^>]*>/g,""));
-			form.down('#form_score').setValue(row.get(column.dataIndex));
-			form.down('#form_feedback').setValue(row.get(column.dataIndex.substr(1)+"feedback"));
-	*/
-		}
+            //console.log('gradegrade_store.data: ');
+            //console.log(gradegrade_store.data);	
+
+			var form = edit_window.down('gradeEditForm');
+            form.data = gradegrade_store.data;
+           
+		}// if ggid is undefined
 	},
 	/*//used for category multifilter
 	submit_multifilter:function(button){
