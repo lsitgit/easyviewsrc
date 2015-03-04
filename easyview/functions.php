@@ -22,6 +22,7 @@ function get_grade_items($courseid,$DB){
                 gi.id,
 		gi.categoryid,
 		gi.gradetype,
+		if (gi.display = 0 and gs.id, gs.value ,gi.display) as display,
  		case when gisrt.itemtype = 'course' then gi.sortorder else gisrt.sortorder end as gc_srt,
                 gi.itemname,
 		gi.itemtype,
@@ -39,6 +40,7 @@ function get_grade_items($courseid,$DB){
         left JOIN {grade_categories} as gc
         ON (gi.categoryid = gc.id)
         LEFT JOIN mdl_grade_items gisrt ON gisrt.courseid = gi.courseid AND gisrt.iteminstance = gi.categoryid 
+        LEFT JOIN mdl_grade_settings gs ON gs.courseid = gi.courseid AND gs.name = 'displaytype'
         WHERE gi.courseid = ".$courseid." ORDER BY gc_srt, gi.sortorder; ";
 
         $grade_items = $DB->get_records_sql($sql);//runs sql query
@@ -51,6 +53,7 @@ function get_grade_items($courseid,$DB){
                 //for that grade item for each student
                 $row['id'] = (int)$grade_item->id;
                 $row['gradetype'] = (int)$grade_item->gradetype;
+                $row['display'] = (int)$grade_item->display;
                 $row['gid'] = "g".(string)$grade_item->id;
                 //the line below is key
                 //we will store feedback for each grade item in a column identified by the 
