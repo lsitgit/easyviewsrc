@@ -69,6 +69,12 @@ for ($i = 0; $i < count($students); $i++){
                 if ( $grade_items[$j]['gradetype'] == 2 ) { 
     			$giforscale=grade_item::fetch(array('id'=>$gitem));
 			$score = grade_format_gradevalue($ggtable[$gitem][$userid]->finalgrade, $giforscale, true);
+                } else if ( $grade_items[$j]['gradetype'] == 3 ) { // text only, feedback
+                        if ($ggtable[$gitem][$userid]->feedback ==  NULL ) {
+                             $score = "-";
+                        } else { 
+		  	     $score = $ggtable[$gitem][$userid]->feedback;
+			}
                 } else { 
     			$giforscale=grade_item::fetch(array('id'=>$gitem));
 			$score = grade_format_gradevalue($ggtable[$gitem][$userid]->finalgrade, $giforscale, true);
@@ -78,7 +84,7 @@ for ($i = 0; $i < count($students); $i++){
 				//we restore this to a dash when displayed
 				$score = -99999;
 			}else{
-				$score = (float)($score);
+                		if ( $grade_items[$j]['display'] == 1 || $grade_items[$j]['display'] == 0) { $score = (float)($score); }
 			}
                 	//$score = number_format((float)($ggtable[$gitem][$userid]->finalgrade),2,'.','');
 		}

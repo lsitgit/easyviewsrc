@@ -96,9 +96,9 @@
                                 items:[        
 				{
                                         icon: 'resources/manual_item.svg',
-                                        tooltip: 'Click the icon to grade student in Quick Edit',
+                                        tooltip: 'Click the icon to grade student in singleview',
                                         handler: function(grid, rowIndex, colIndex) {
-                                                var url =WROOT+"/grade/report/quick_edit/index.php?item=user&itemid="
+                                                var url =WROOT+"/grade/report/singleview/index.php?item=user&itemid="
 							+grid.panel.store.data.items[rowIndex].data.userid
 							+"&id="+COURSEIDPASSEDIN;
                                                 /*var win = window.open(url, 'easygrade quickedit');
@@ -199,7 +199,8 @@
 						"<p>"+grade_name+", Score: "+new_value+ 
 						"</strong><p>"+data.get(feedback_name) + '"';
 					};
-                                        return new_value == '-' ? new_value : new_value.toFixed(SCORE_PRECISION);// SCORE_PRECISION in index.php
+
+                                        	return isNaN(new_value) ? new_value : new_value.toFixed(SCORE_PRECISION);
                                 },
                                 summaryRenderer: function(value, summaryData, dataIndex) {
                                         if(isNaN(value)){
@@ -210,8 +211,12 @@
 				
                 }); 
                 //model array defines which grade item ids each student should have a score for (specifying it as an int for now)
-		var typeformat="float";
-                if(grade_items[i]['gradetype']==2){
+		var typeformat="string";
+                if(grade_items[i]['display']==0 || grade_items[i]['display']==1 ){
+                        typeformat="float";
+                }
+// if gradetype is scale or text, put out as string always
+                if(grade_items[i]['gradetype']==2 || grade_items[i]['gradetype']==3){
                         typeformat="string";
                 }
                 MODEL.push({name: grade_items[i]['gid'], type:typeformat});

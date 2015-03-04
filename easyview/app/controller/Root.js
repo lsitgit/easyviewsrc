@@ -45,7 +45,7 @@ Ext.define('easyview.controller.Root', {
 				window.location = WROOT+'/grade/export/egrade/index.php?id='+COURSEIDPASSEDIN;
 				break;
 			case 'Quick Edit':
-				window.location = WROOT+'/grade/report/quick_edit/index.php?id='+COURSEIDPASSEDIN;
+				window.location = WROOT+'/grade/report/singleview/index.php?id='+COURSEIDPASSEDIN;
 				break;
 			case 'User Report':
 				window.location = WROOT+'/grade/report/user/index.php?id='+COURSEIDPASSEDIN;

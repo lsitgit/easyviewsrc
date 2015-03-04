@@ -25,7 +25,7 @@
 require '../../../../config.php'; 
 //require '../../config.php'; 
 
-// var url = WROOT+"/grade/report/quick_edit/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
+// var url = WROOT+"/grade/report/singleview/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
 if (session_id() == "") session_start('mysess');
 
 require_login();
@@ -90,8 +90,8 @@ WHERE
             }        
 //        print "is module $uri";
         } elseif ($gritem->itemtype === 'manual') {
-            $uri= "/grade/report/quick_edit/index.php?id={$courseid}&item=grade&group=&itemid={$itemid}";
-//                   /grade/report/quick_edit/index.php?id=578&item=grade&group=&itemid=6261
+            $uri= "/grade/report/singleview/index.php?id={$courseid}&item=grade&group=&itemid={$itemid}";
+//                   /grade/report/singleview/index.php?id=578&item=grade&group=&itemid=6261
         }    
     }
     if ($uri === ''){
@@ -161,8 +161,8 @@ $url = get_item_url($courseid, $itemid, $DB);
 // /mod/quiz/reviewquestion.php?attempt=25&slot=2
 // /mod/quiz/view.php?id=801&action=grading
 // quik_edit
-// /grade/report/quick_edit/index.php?id=578&item=grade&group=&itemid=6261
-// /grade/report/quick_edit/index.php?id=578&item=grade&group=&itemid=6261
+// /grade/report/singleview/index.php?id=578&item=grade&group=&itemid=6261
+// /grade/report/singleview/index.php?id=578&item=grade&group=&itemid=6261
     redirect("$CFG->wwwroot/$url");
   
  

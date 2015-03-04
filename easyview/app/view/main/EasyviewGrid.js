@@ -47,7 +47,7 @@ Ext.define('easyview.view.main.EasyviewGrid', {
                                 handler: function() {
                                 	var gradeid = unlocked_grid_header_menu.activeHeader.dataIndex;
 					// the substring(1) is a hack to strip the character that prefixes the id number for trying to get printing to work
-                                        var url = WROOT+"/grade/report/quick_edit/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
+                                        var url = WROOT+"/grade/report/singleview/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
 					window.location.href = url;
                            	}
                     	},{
@@ -69,7 +69,7 @@ Ext.define('easyview.view.main.EasyviewGrid', {
                                 handler: function() {
                                 	var gradeid = locked_grid_header_menu.activeHeader.dataIndex;
 					// the substring(1) is a hack to strip the character that prefixes the id number for trying to get printing to work
-                                        var url = WROOT+"/grade/report/quick_edit/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
+                                        var url = WROOT+"/grade/report/singleview/index.php?id="+COURSEIDPASSEDIN+"&item=grade&group=&itemid="+gradeid.substring(1);
                                         var win = window.open(url, 'easygradeuserreport');
                                         win.focus();
                            	}
